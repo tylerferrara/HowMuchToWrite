@@ -1,12 +1,10 @@
 import React, { Component } from 'react';
 import {
   BrowserRouter as Router,
-  Route,
-  Link
-} from 'react-router-dom'
+  Route
+} from 'react-router-dom';
 import Gen from './Gen.js';
 import Home from './Home.js';
-import logo from './logo.svg';
 import './App.css';
 
 class App extends Component {
@@ -19,7 +17,6 @@ class App extends Component {
             <Route path="/gen" component={Gen} />
           </div>
         </Router>
-        {/* <Home /> */}
       </div>
     );
   }
