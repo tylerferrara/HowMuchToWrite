@@ -1,0 +1,10 @@
+.Home {
+  text-align: center;
+}
+
+input {
+  border-radius: 50px;
+  border: none;
+  font-size: 2rem;
+  text-align: center;
+}
