@@ -7,7 +7,7 @@ class Gen extends Component{
     super(props);
     this.state = {
       words: null,
-      text: null,
+      text: "",
       output: []
     }
   }
@@ -26,40 +26,72 @@ class Gen extends Component{
         format: 'plain'
       });
       this.setState({words});
-      this.setState({text});
+      this.sentenceGen(text);
     }
-    console.log(this.state.text);
 
-    // this.paragraphGen();
   }
 
-  paragraphGen() {
-    let collection = this.state.text.split(" ");
-    let tempOutput = [];
+  sentenceGen(text) {
+    let collection = text.split(" ");
+    let textList = [];
     let WPS = null;
     let str;
 
     while(collection.length > 0) {
       str = "";
-      WPS = Math.round(5 + Math.random() * 10);
+      WPS = Math.round(5 + Math.random() * 20);
       if(collection.length < WPS) {
-        collection.forEach(word => {
-          str += (word + " ");
+        collection.forEach((word, index) => {
+          if(index === 0) {
+            str += word.charAt(0).toUpperCase() + word.slice(1);
+          } else {
+            str += (" " + word);
+          }
         })
          // <FIX THIS
         collection = ""; // collection is done
       } else {
-        collection.splice(0, WPS).forEach(word => {
-          str += (word + " ");
+        collection.splice(0, WPS).forEach((word, index) => {
+          if(index === 0) {
+            str += word.charAt(0).toUpperCase() + word.slice(1);
+          } else {
+            str += (" " + word);
+          }
         });
       }
-      tempOutput.push(<p>{str + "."}</p>);
+      textList.push(str + ". ");
     }
-    this.setState({output: tempOutput})
+    this.paragraphGen(textList);
+  }
+
+  paragraphGen(textList) {
+    let tempList = textList;
+    let tempP = "";
+    let blocks = [];
+    let SPP;
+    let id = 0;
+    while(tempList.length > 0) {
+      SPP = Math.round(4 + Math.random() * 8);
+      if(SPP > tempList.length) {
+        tempList.forEach(s => {
+          tempP += s;
+        });
+        tempList = [];
+      } else {
+        for(let i = 0; i < SPP; i++) {
+          tempP += tempList[i];
+          tempList = tempList.slice(1);
+        }
+      }
+      blocks.push(<p key={id}>{tempP}</p>)
+      id++;
+      tempP = "";
+    }
+    this.setState({output: blocks});
   }
 
   render() {
-    console.log(this.state.output);
+    console.log(this.state.words);
     return (
       <div className="Gen">
         <h1>GEN TIME!</h1>
